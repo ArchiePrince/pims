@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Wildside\Userstamps\Userstamps;
+
+class Event extends Model
+{
+    use Userstamps;
+    use HasFactory;
+    use SoftDeletes;
+
+    public $table = 'events';
+
+    protected $primaryKey = 'eid';
+
+    protected $dates = [
+        'e_date',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'e_title',
+        'e_date',
+        'e_loc',
+        'e_desc',
+        'e_rmrks',
+        'tid',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+
+    // protected function serializeDate(DateTimeInterface $date)
+    // {
+
+    //     return $date->format('Y-m-d H:i:s');
+    // }
+
+
+    public function eventType()
+    {
+
+            return $this->belongsTo(EventType::class, 'tid');
+        
+    }
+  
+    //Event has many batches
+    public function batches()
+    {
+        return $this->hasOne(Batche::class, 'bid');
+    }
+
+}
