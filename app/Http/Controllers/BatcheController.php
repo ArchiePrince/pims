@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Batche;
 use App\Models\EventType;
+use App\Models\Participant;
 
 class BatcheController extends Controller
 {

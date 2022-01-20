@@ -27,7 +27,7 @@
 @section('content')
     <div class="page-title">
       <div class="title_left">
-        <h3>Users <small>Some examples to get you started</small></h3>
+        <h3>All Events</h3>
       </div>
 
       <div class="title_right">
@@ -47,7 +47,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Plus Table Design</small></h2>
+            <h2>Distinct Events</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -67,16 +67,12 @@
               <div class="row">
                   <div class="col-sm-12">
                     <div class="card-box table-responsive">
-            <p class="text-muted font-13 m-b-30">
-              DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-              
         @if(\Session::has('del'))
             <div id="hide-message" class="alert alert-success alert-dismissible fade show" style="width: 25%; opacity:0.6;">
                 <i class="fa fa-check-circle-o" style="font-size:1em"></i>
                 {!! \Session::get('del') !!}
             </div>
         @endif
-            </p>
             <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" cellspacing="0" style="width:100%">
               <thead>
                 <tr>
@@ -115,7 +111,7 @@
                       <i class="fa fa-eye" style="color: #0ecf48;"></i>
                     </a>
                     <a href=""><i class="fa fa-edit text-primary"></i></a>
-                   <form action="" method="POST">
+                   <form action="{{ route('events.destroy', $event) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"><i ></i></a></button>

@@ -15,23 +15,33 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Contacts Design</h3>
+                <h3>Name Tags</h3>
               </div>
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5  form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
+                  
                 </div>
               </div>
             </div>
 
             <div class="clearfix"></div>
+                       
+                      <label class="control-label col-md-6 col-sm-6">Search by Events</label>
+												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
+													<option selected>Select Event:Batch</option>
+                                {{-- @foreach ($attBatchEvent as $batchEvent )
+                                @php
+                                    $full_name = $batchEvent->events->e_title. ":".$batchEvent->b_title;
+                                @endphp
+                                <option value="{{ $batchEvent->bid }}">{{ $full_name ?? 'Not found'}}</option>
+                                @endforeach --}}
+												</select>
 
+            <div class="clearfix"></div>
+            <br>
+            <br>
+            <br>
             <div class="row">
                 <div class="x_panel">
                   <div class="x_content">

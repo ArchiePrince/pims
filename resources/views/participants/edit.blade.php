@@ -93,8 +93,8 @@
                             <div class="col-md-6 col-sm-6  ">
                                             <select id="gender" name="gender" class="select2_single form-control" tabindex="-1">
                                             <option value="" disabled>Select Gender</option>										
-											<option value="{{ $participant->gender }}">Male</option>
-                                            <option value="{{ $participant->gender }}">Female</option>
+											<option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                             </select>
                             </div>
                       </div>

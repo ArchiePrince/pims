@@ -41,8 +41,8 @@ class Event extends Model
     // {
 
     //     return $date->format('Y-m-d H:i:s');
-    // }
 
+    // }
 
     public function eventType()
     {
@@ -54,7 +54,7 @@ class Event extends Model
     //Event has many batches
     public function batches()
     {
-        return $this->hasOne(Batche::class, 'bid');
+        return $this->hasMany(Batche::class, 'bid');
     }
 
 }

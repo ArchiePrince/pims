@@ -95,13 +95,29 @@
 											</div>
 										</div>
 
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="u_dpt">Set Default Password <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="password" id="password" name="password" required="required" class="form-control">
+											</div>
+										</div>
+
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="u_dpt">Confirm Password<span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="password" id="password-confirm" name="password_confirmation" required="required" class="form-control">
+											</div>
+										</div>
+
                     
    
 
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
-												<a href="{{ route('participants.index') }}"><button class="btn btn-primary" type="button">Cancel</button></a>
+												<a href="{{ route('users.index') }}"><button class="btn btn-primary" type="button">Cancel</button></a>
 												<button class="btn btn-primary" type="reset">Reset</button>
 												<button type="submit" class="btn btn-success">Submit</button>
 											</div>

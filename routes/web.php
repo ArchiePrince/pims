@@ -33,8 +33,6 @@ Route::get('nametags', function () {
     
 });
 
-Route::delete('/selected-participants',[ParticipantController::class, 'deleteCheckedParticipants'])->name('participant.deleteSelected');
-
 Route::resource('batches', BatcheController::class);
 
 Route::resource('participants', ParticipantController::class)->middleware('auth');

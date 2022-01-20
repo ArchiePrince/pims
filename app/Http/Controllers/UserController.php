@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -40,10 +43,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::firstOrNew(['uid'=>$id]);
+        $uid = $request->uid;
+        $user = User::firstOrNew(['uid'=>$uid]);
            $user->name = $request->name;
             $user->username = $request->username;
             $user->email = $request->email;
+            $user->password = Hash::make($request->password);
             $user->u_dpt = $request->u_dpt;
             $user->save();
        return redirect()->route('users.create')->with('success', 'User is successfully added!');

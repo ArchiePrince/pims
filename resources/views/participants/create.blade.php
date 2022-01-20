@@ -15,7 +15,8 @@
   <div class="clearfix"></div>
   <div class="page-title">
   <div class="title_left">
-    <h3>Users <small>Some examples to get you started</small></h3>
+    {{-- <h3>Users <small>Some examples to get you started</small></h3> --}}
+	<h3>Add Participants</h3>
   </div>
 
 						<div class="title_right">
@@ -84,8 +85,8 @@
                             <div class="col-md-6 col-sm-6  ">
                                             <select id="gender" name="gender"class="select2_single form-control" tabindex="-1">
                                             <option value="" disabled>Select Gender</option>										
-											<option value="male">Male</option>
-                                            <option value="female">Female</option>
+											<option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                             </select>
                             </div>
                       </div>

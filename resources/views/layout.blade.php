@@ -80,16 +80,20 @@
                   </li>
                   <li><a href="{{ url('nametags') }}"><i class="fa fa-credit-card"></i> {{ __('Name Tags') }}</a>
                   </li>
-                  <li><a href="{{ url('attendance') }}"><i class="fa fa-book"></i> {{ __('Attendance') }}</a>
+                  <li><a><i class="fa fa-book"></i> {{ __('Attendance') }} <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ route('attendance.index') }}">{{ __('Participants by Events') }}</a></li>
+                      <li><a href="{{ route('attendance.create') }}">{{ __('Register Participants') }}</a></li>
+                    </ul>
                   </li>
                   <li><a><i class="fa fa-users"></i> {{ __('Users') }} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('users.index') }}">{{ __('View All Users') }}</a></li>
                       <li><a href="{{ route('users.create') }}">{{ __('Add User') }}</a></li>
                     </ul>
-                  </li>
-                      <li><a href="#"><i class="fa fa-key"></i> {{ __('Change Password') }}</a>
-                  </li>
+                  {{-- </li>
+                      <li><a href="{{ url('paswords.reset') }}"><i class="fa fa-key"></i> {{ __('Change Password') }}</a>
+                  </li> --}}
                 </ul>
               </div>
                 </ul>

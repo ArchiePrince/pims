@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
 use App\Models\Attendance;
+use App\Models\Batche;
 
 class Participant extends Model
 {
@@ -35,10 +36,17 @@ class Participant extends Model
         'tel',
         'phone',
     ];
-    protected $gender = ['male', 'female'];
+    protected $gender = ['Male', 'Female'];
 
     public function getFullNameAttribute()
     {
         return "{$this->f_name} {$this->l_name}";
     }
+
+    //Participants can belongToMany Batches
+    public function batches() 
+    {
+        return $this->belongsToMany(Batche::class, 'batche_participant', 'bid', 'pid');
+    }
+
 }

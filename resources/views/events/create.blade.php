@@ -15,7 +15,7 @@
   <div class="clearfix"></div>
   <div class="page-title">
   <div class="title_left">
-    <h3>Users <small>Some examples to get you started</small></h3>
+    <h3>EVENTS</h3>
   </div>
 
 						<div class="title_right">
@@ -35,7 +35,7 @@
 						<div class="col-md-12 col-sm-12 ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Form Design <small>different form elements</small></h2>
+									<h2><small>CREATE A NEW EVENT</small></h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 										</li>
@@ -91,7 +91,7 @@
                                           <label class="col-form-label col-md-3 col-sm-3 label-align" >Event Type</label>
                             <div class="col-md-6 col-sm-6  ">
                                             <select name="tid"class="select2_single form-control" tabindex="-1">
-                                              <option></option>
+                                              <option selected>Select Event Type</option>
 											  @foreach ($eventType as $type)
 												      <option value="{{ $type->tid }}">{{ $type->t_title }}</option> 
 											  @endforeach
@@ -144,7 +144,7 @@
 						<div class="col-md-12 col-sm-12 ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Form Design <small>different form elements</small></h2>
+									<h2><small>ASSIGN BATCH TO EVENT</small></h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 										</li>
@@ -178,7 +178,7 @@
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Event <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="event-name" class="form-control " name="e_title" placeholder="{{ $batchEvent->e_title }}">
+												<input type="text" id="event-name" class="form-control " name="e_title" placeholder="{{ $batchEvent->e_title ?? "No data"}}">
 											</div>
 										</div>
 											 {{-- <div class="item form-group">
@@ -210,6 +210,34 @@
                                             </select>
                             </div>
                       </div>
+					  <div class="item form-group">
+                          <label class="col-form-label col-md-3 col-sm-3 label-align">Start Date <span class="required">*</span>
+                          </label>
+                          <div class="col-md-6 col-sm-6 ">
+                            <input id="strt_time" class="date-picker form-control"  type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)" name="strt_time">
+                            <script>
+                              function timeFunctionLong(input) {
+                                setTimeout(function() {
+                                  input.type = 'text';
+                                }, 60000);
+                              }
+                            </script>
+                          </div>
+                    </div>
+					<div class="item form-group">
+                          <label class="col-form-label col-md-3 col-sm-3 label-align">End Date <span class="required">*</span>
+                          </label>
+                          <div class="col-md-6 col-sm-6 ">
+                            <input id="end_time" class="date-picker form-control"  type="date" required="required" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)" name="end_time">
+                            <script>
+                              function timeFunctionLong(input) {
+                                setTimeout(function() {
+                                  input.type = 'text';
+                                }, 60000);
+                              }
+                            </script>
+                          </div>
+                    </div>
                 
 										<div class="ln_solid"></div>
 										<div class="item form-group">

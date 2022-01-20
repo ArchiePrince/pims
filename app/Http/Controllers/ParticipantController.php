@@ -9,7 +9,6 @@ use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Batche;
 use App\Models\Event;
-use App\Models\Attendance;
 
 class ParticipantController extends Controller
 {
@@ -17,11 +16,10 @@ class ParticipantController extends Controller
     public function index()
     {
         //
-        $attBatchEvent = Batche::with('event', 'participants', 'creator', 'editor', 'destroyer')->get();
-        $attendances = Attendance::with('participant', 'batch', 'creator', 'editor', 'destroyer')->get();
-        $participants = Participant::orderBy('pid', 'DESC')->get();
+        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
+        $participants = Participant::with('creator', 'editor', 'destroyer')->get();
 
-        return view('participants.index', compact('participants', 'attBatchEvent', 'attendances'));
+        return view('participants.index', compact('participants', 'attBatchEvent'));
     }
 
  
@@ -60,6 +58,7 @@ class ParticipantController extends Controller
             $participant->tel = $tel;
             $participant->phone  = $phone;
             $participant->save();
+            
        return redirect()->route('participants.create')->with('success', 'Participant is successfully added!');
     }
 
@@ -90,7 +89,7 @@ class ParticipantController extends Controller
         $participant->phone = $request->phone;
         $participant->save();
 
-        return redirect()->route('participants.edit', $participant)->with('update', 'Data is successfully updated!');
+        return redirect()->route('participants.index', $participant)->with('update', 'Data is successfully updated!');
     }
 
     /**
@@ -105,12 +104,5 @@ class ParticipantController extends Controller
         $participant->delete();
         return redirect()->back()->with('del', 'Data deleted successfully!');
 
-    }
-
-    public function deleteCheckedParticipants(Request $request)
-    {
-        $ids = $request->ids;
-        Participant::whereIn('pid',$ids)->delete();
-        return response()->json(['delSel'=> "Participants have been deleted!"]);
     }
 }

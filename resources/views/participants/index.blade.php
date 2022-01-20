@@ -1,7 +1,7 @@
 @extends('layout')
 @section('dTstyles')
 <!-- Datatables -->
-    
+
 <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
 <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -20,62 +20,57 @@
         font-size: 25px !important;
         margin-top: 5px !important;
     }
+    #notifDiv {
+        z-index: 10000;
+        display: none;
+        background: blue;
+        font-weight: 450;
+        width: 350px;
+        position: fixed;
+        top: 80%;
+        left: 5%;
+        color: white;
+        padding: 5px 20px;
+    }
 </style>
 
 @endsection
 @section('content')
     <div class="page-title">
       <div class="title_left">
+        <h3>All Participants</h3>
+
         <div class="form-group row">
-            				<div class="x_content">
+            <div class="x_content">
 									<br />
-									@if (Session::has('add'))
-									
-										<span id="hidden-message" class="text-success label-align alert alert-dismissible fade show">
-											{{ session('add') }}
-										</span>
-								
-									@endif
-                                  
-                                    {{-- <div id="notifDiv" class="alert alert-success alert-dismissible fade show" style="width: 25%; opacity:0.6;"></div> --}}
-                                    
-									<form id="submitSelectedParticipants" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ route('attendance.store') }}">
-											  @csrf
-                                        <label class="control-label col-md-3 col-sm-3 ">Assign Participant to Event:</label>
-											<div class="col-md-12 col-sm-12 ">
-                                                <div class="input-group">
-                                          
-												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
-													<option selected>Select Event:Batch</option>
-                                                    @foreach ($attBatchEvent as $batchEvent )
-                                                    @php
-                                                        $full_name = $batchEvent->event->e_title . ":".$batchEvent->b_title ;
-                                                    @endphp
-                                                    <option value="{{ $batchEvent->bid }}">{{ $full_name ?? 'Not found'}}</option>
-                                                    @endforeach
-									
-												</select>
-                                                
-                                                <input type="submit" placeholder="Register Participant" class="input-group-btn btn btn-danger save_btn">
-                                            </div>
-											</div>
-												
-									</form>
-								</div>
-											
+
+
+                    @if(\Session::has('del'))
+                        <div id="hide-message" class="alert alert-primary alert-dismissible fade show" style="width: 70%; opacity: 1;">
+                            <i class="fa fa-check-circle-o" style="font-size:1em"></i>
+                            {!! \Session::get('del') !!}
+                        </div>
+                    @endif
+
+
+
+
+
+            </div>
+
 										</div>
-        {{-- <a href="#" class="btn btn-primary" id="deleteAllSelectedRecord" onclick="return confirm('Are you sure to want to delete it?')">Delete Selected</a> --}}
-        
+
+
       </div>
 
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
           <div class="float-right">
             <a href="{{ route('participants.create') }}" class="" ><i class="fa fa-plus btn btn-icon btn-danger"></i></a>
-                
-        
-                
-         
+
+
+
+
           </div>
         </div>
       </div>
@@ -86,7 +81,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Plus Table Design</small></h2>
+            <h2>Distinct Participants</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -106,31 +101,39 @@
               <div class="row">
                   <div class="col-sm-12">
                     <div class="card-box table-responsive">
-        {{-- @if(\Session::has('delSel'))
-            <div id="hide-message" class="alert alert-success alert-dismissible fade show" style="width: 25%; opacity:0.6;">
-                <i class="fa fa-check-circle-o" style="font-size:1em"></i>
-                {!! \Session::get('delSel') !!}
-            </div>
-        @endif
-             <form id="deleteAllSelectedRecord" action="{{ route('participant.deleteSelected') }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="btn btn-primary" >Delete Selected</button> --}}
-                   </form>
-        @if(\Session::has('del'))
-            <div id="hide-message" class="alert alert-success alert-dismissible fade show" style="width: 25%; opacity:0.6;">
-                <i class="fa fa-check-circle-o" style="font-size:1em"></i>
-                {!! \Session::get('del') !!}
-            </div>
-        @endif
-        
+
+                        <br />
+	{{-- <form id="submitSelectedParticipants" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ route('attendance.store') }}">
+											  @csrf
+
+											<div class="col-md-8 col-sm-8 ">
+                                                 <div class="input-group">
+                                                <label class="control-label col-md-3 col-sm-3 ">Assign Participant to Event:</label>
+
+
+												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
+													<option selected>Select Event:Batch</option>
+                                                    @foreach ($attBatchEvent as $batchEvent )
+                                                    @php
+                                                        $full_name = $batchEvent->events->e_title. ":".$batchEvent->b_title;
+                                                    @endphp
+                                                    <option value="{{ $batchEvent->bid }}">{{ $full_name ?? 'Not found'}}</option>
+                                                    @endforeach
+
+												</select>
+
+                                                <input type="submit" placeholder="Register Participant" class="input-group-btn btn btn-danger save_btn">
+                                            </div>
+											</div>
+                            </form>
+	 --}}
 
             <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" cellspacing="0" style="width:100%">
               <thead>
                 <tr>
-                  <th>
-                    <input type="checkbox"  id="chkCheckAll">
-                  </th>
+                    <th>
+                    <input type="checkbox" class="checkBoxClassAll" value="">
+                    </th>
                   <th>#</th>
                   <th>Name</th>
                   <th>Gender</th>
@@ -149,8 +152,7 @@
                 @if($participants)
                 @foreach($participants as $participant)
                 <tr id="pid{{ $participant->pid }}">
-                  
-                  <td><input type="checkbox" class="checkBoxClass" name="pid[]" value="{{ $participant->pid }}"></td>
+                <td><input type="checkbox" class="checkBoxClass" name="pid[]" value="{{ $participant->pid }}"></td>
                   <td class="rec_id">{{ $participant->rec_id }}</td>
                   @php
                   $full_name = $participant->f_name. " ".$participant->l_name;
@@ -163,7 +165,7 @@
                 <td  class="distr">{{ $participant->distr }}</td>
                 <td class="rgn"> {{ $participant->rgn }}</td>
                 <td  class="tel"> {{ $participant->tel }} </td>
-                <td class="phone"> {{ $participant->phone }}</td>
+                <td class="phone"> {{ $participant->phone ?? "Null" }}</td>
                 <td>
                    <a class=" m-r-15 text-muted paxView" data-toggle="modal" data-id="'.$participant->pid.'" data-target="#ParticipantView">
                       <i class="fa fa-eye" style="color: #0ecf48;"></i>
@@ -199,7 +201,7 @@
                 <form id="demo-form"><!-- form add -->
                     {{ csrf_field() }}
                     <input type="hidden" class="form-control" id="m_pid" name="pid" value=""/>
-                    
+
                     <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Serial Number</label>
@@ -222,8 +224,8 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Email Address</label>
                             <div class="col-sm-9">
-                                <input type="text" id="m_email"name="p_email" class="form-control" value="" readonly/> 
-                                {{-- <span id="m_email" name="p_email" class="form-control" aria-readonly>{{ $participant->p_email }}</span> --}}
+                                <input type="text" id="m_email"name="p_email" class="form-control" value="" readonly/>
+
                             </div>
                         </div>
                         <div class="form-group row">
@@ -233,7 +235,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Organization</label>
                             <div class="col-sm-9">
@@ -241,7 +243,7 @@
                             </div>
                         </div>
 
-                                          
+
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">District</label>
                             <div class="col-sm-9">
@@ -270,7 +272,7 @@
                             </div>
                         </div>
                     </div>
-              
+
                 <!-- form add end -->
             </div>
                   <div class="clearfix"></div>
@@ -312,7 +314,7 @@
     {
         $('#hide-message').hide();
     },2000);
-    
+
 </script>
 {{-- <script>
 $(document).ready(function() {
@@ -351,9 +353,9 @@ $(document).ready(function() {
         $('#m_tel').val(_this.find('.tel').text());
         $('#m_phone').val(_this.find('.phone').text());
     });
-</script> 
+</script>
 
-<script>
+{{-- <script>
     $(function(e){
         $("#chkCheckAll").click(function(){
             $(".checkBoxClass").prop('checked',$(this).prop('checked'));
@@ -367,24 +369,24 @@ $(document).ready(function() {
                 all_ids.push($(this).val());
             });
 
-            $.ajax({
-                url:"{{ route('participant.deleteSelected') }}",
-                type:"DELETE",
-                data:{
-                    _token:$("input[name=_token]").val(),
-                    pid:all_ids
-                },
-                success:function(response){
-                    $.each(all_ids, function(key,val){
-                        $("#pid"+val).remove();
-                    })
-                }
-            })
+            // $.ajax({
+            //     url:"{{ route('participant.deleteSelected') }}",
+            //     type:"DELETE",
+            //     data:{
+            //         _token:$("input[name=_token]").val(),
+            //         pid:all_ids
+            //     },
+            //     success:function(response){
+            //         $.each(all_ids, function(key,val){
+            //             $("#pid"+val).remove();
+            //         })
+            //     }
+            // })
         })
     });
 
 
-</script>
+</script> --}}
 
 {{-- <script>
 
@@ -462,7 +464,7 @@ $(function(f){
     });
 
 </script> --}}
-<script>
+{{-- <script>
     $(document).ready(function(){
         $('.save_btn').on('click', function(e) {
             e.preventDefault();
@@ -502,8 +504,8 @@ $(function(f){
             });
         });
     });
-</script>
+</script> --}}
 
       @endsection
-  
+
 @endsection

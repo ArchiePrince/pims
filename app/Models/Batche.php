@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
-use App\Models\Attendance;
 
 class Batche extends Model
 {
@@ -19,26 +18,25 @@ class Batche extends Model
 
     protected $fillable = [
         'b_title',
+        'strt_time',
+        'end_time',
         'eid',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    // public function getFullNameAttribute()
-    // {
-    //     return "{$this->b_title} {$event->e_title}";
-    // }
 
     //A batch belongs to an event
-    public function event()
+    public function events()
     {
         return $this->belongsTo(Event::class, 'eid');
     }
 
-    public function participants()
+    //A batch belongsToMany Participants
+    public function participants() 
     {
-        return $this->belongsToMany(Participant::class, 'attendances', 'bid', 'pid')->withTimestamps();
+        return $this->belongsToMany(Participant::class, 'batche_participant', 'pid', 'bid');
     }
 
 }

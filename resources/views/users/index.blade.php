@@ -51,7 +51,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Plus Table Design</small></h2>
+            <h2>All Users</small></h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -71,15 +71,10 @@
               <div class="row">
                   <div class="col-sm-12">
                     <div class="card-box table-responsive">
-            <p class="text-muted font-13 m-b-30">
-              DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function: <code>$().DataTable();</code>
-            </p>
             <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" cellspacing="0" style="width:100%">
               <thead>
                 <tr>
-                  <th>
-                    <input type="checkbox" name="" id="check-all" disabled>
-                  </th>
+                  <th><input type="checkbox" name="" id=""></th>
                   <th>#</th>
                   <th>Full name</th>
                   <th>Username</th>
@@ -95,8 +90,7 @@
                 @if($users)
                 @foreach($users as $user)
                 <tr>
-                  
-                  <td><input type="checkbox" id="check-all" ></td>
+                  <td><input type="checkbox" name="" id=""></td>
                   <td class="uid">{{ $user->uid }}</td>
                 <td class="full_name">{{ $user->name }}</td>
                 <td class="username"> {{ $user->username }}</td>

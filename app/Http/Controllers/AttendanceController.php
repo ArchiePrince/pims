@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
-use App\Models\Attendance;
-use App\Models\Participant;
 use App\Models\Batche;
-use App\Models\Event;
+use App\Models\Participant;
 
 class AttendanceController extends Controller
 {
@@ -18,12 +15,11 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //SELECT * FROM events;
-        $attendances = Attendance::with('batch', 'participant', 'creator', 'editor', 'destroyer')
-        ->latest()->get();
-       
 
-        return view('attendance', compact('attendances'));
+        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
+        $participants = Participant::with('creator', 'editor', 'destroyer')->get();
+
+        return view('attendance.index', compact('participants', 'attBatchEvent'));
     }
 
     /**
@@ -33,7 +29,9 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-      //
+        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
+        $participants = Participant::with('creator', 'editor', 'destroyer')->get();
+       return view('attendance.create', compact('participants', 'attBatchEvent'));
     }
 
     /**
@@ -44,7 +42,7 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-       
+        //
     }
 
     /**
