@@ -27,7 +27,7 @@
 
   <body class="login d-flex flex-column h-100" data-new-gr-c-s-check-loaded="14.1034.0" data-gr-ext-installed="">
 
-    
+
   <!-- MAIN CONTENT BEGINS -->
   <main role="main" class="flex-shrink-0">
     <div class="container-fluid">
@@ -59,7 +59,7 @@
                                     </span>
                                 @enderror
                     </div>
-                    
+
                     <div class="form-group mb-3">
                       <input name="email" id="email" type="email" placeholder="Email address" class="form-control @error('email') is-invalid @enderror rounded-pill border-0 shadow-custom px-4" value="{{ old('email') }}" autocomplete="email" autofocus>
                                 @error('email')
@@ -78,7 +78,7 @@
                                 @enderror
                     </div>
 
-                    {{-- 
+                    {{--
                 <div class="form-group">
                   <select class="form-control form-control-lg" id="exampleFormControlSelect2">
                     <option>Country</option>
@@ -90,19 +90,19 @@
                   </select>
                 </div> --}}
 
-                <div class="form-group mb-3">
-                      <input name="u_dpt" id="u_dpt" type="text" placeholder="Department" class="form-control @error('u_dpt') is-invalid @enderror rounded-pill border-0 shadow-custom px-4" value="{{ old('u_dpt') }}" autocomplete="u_dpt" autofocus>
-                                @error('u_dpt')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                </div>
+{{--                <div class="form-group mb-3">--}}
+{{--                      <input name="u_dpt" id="u_dpt" type="text" placeholder="Department" class="form-control @error('u_dpt') is-invalid @enderror rounded-pill border-0 shadow-custom px-4" value="{{ old('u_dpt') }}" autocomplete="u_dpt" autofocus>--}}
+{{--                                @error('u_dpt')--}}
+{{--                                    <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{ $message }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                @enderror--}}
+{{--                </div>--}}
 
 
                     <div class="form-group mb-3">
                       <input name="password" id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror rounded-pill border-0 shadow-custom px-4 text-primary"  autocomplete="new-password">
-                               
+
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -113,7 +113,7 @@
                     <div class="form-group mb-3">
                       <input name="password_confirmation" id="password-confirm" type="password" placeholder="Password Confirmation" class="form-control @error('password') is-invalid @enderror rounded-pill border-0 shadow-custom px-4 text-primary"   autocomplete="new-password">
                     </div>
-                
+
                     <button name="submit" type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ __('Register') }}</button>
                     <div class="text-center d-flex justify-content-between mt-4">
                       <p>Already have existing account?

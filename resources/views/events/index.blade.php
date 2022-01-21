@@ -2,7 +2,7 @@
 @extends('layout')
 @section('dTstyles')
 <!-- Datatables -->
-    
+
 <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
 <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -33,7 +33,8 @@
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
           <div class="float-right">
-            <a href="{{ route('events.create') }}" class=""><i class="fa fa-plus btn btn-icon btn-danger"></i></a>
+            <a href="{{ route('events.create') }}" class=""><button type="button" class="btn btn-danger btn-rounded btn-icon">{{ __('Create a new Event') }}
+                </button> </a>
           {{-- <a href="{{ route('events') }}"><button type="button" class="btn btn-danger btn-rounded btn-icon">
             {{-- {{ __('Register Event') }} --}}
           </button></a>
@@ -95,7 +96,7 @@
               <tbody>
                 @foreach($events as $event)
                 <tr>
-                  
+
                 <td><input type="checkbox" id="check-all" ></td>
                 <td class="rec_id">{{ $loop->iteration }}</td>
                 <td>{{ $event->e_title }}</td>
@@ -152,7 +153,7 @@
     {
         $('#hide-message').hide();
     },2000);
-    
+
 </script>
 {{-- <script>
 $(document).ready(function() {
@@ -191,8 +192,8 @@ $(document).ready(function() {
         $('#m_tel').val(_this.find('.tel').text());
         $('#m_phone').val(_this.find('.phone').text());
     });
-</script> 
+</script>
 
       @endsection
-  
+
 @endsection

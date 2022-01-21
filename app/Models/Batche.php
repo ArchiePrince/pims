@@ -34,7 +34,7 @@ class Batche extends Model
     }
 
     //A batch belongsToMany Participants
-    public function participants() 
+    public function participants()
     {
         return $this->belongsToMany(Participant::class, 'batche_participant', 'pid', 'bid');
     }
