@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Batche;
 use App\Models\EventType;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EventController extends Controller
 {
@@ -14,53 +16,68 @@ class EventController extends Controller
     public function index()
     {
         //SELECT * FROM events;
-        $events = Event::with('eventType', 'creator', 'editor', 'destroyer')
-        ->latest()->get();
-       
+        $events = Event::with('batches', 'eventType', 'creator', 'editor', 'destroyer')
+            ->latest()->get();
+        $batches = Batche::with('events', 'creator', 'editor', 'destroyer')->get();
 
-        return view('events.index', compact('events'));
+
+        return view('events.index', compact('events', 'batches'));
 
     }
- 
+
     public function create()
     {
-        $eventType = EventType::all();
-        $batchEvent = Event::with('eventType', 'creator', 'editor', 'destroyer')->latest()->first();
-        $batch = Batche::all();
-        return view('events.create', compact('eventType', 'batchEvent', 'batch'));
+        //
     }
 
     public function store(Request $request)
     {
 
-         $batchEvent = Event::with('eventType', 'creator', 'editor', 'destroyer')->latest()->first();
+//         $batchEvent = Event::with('eventType', 'creator', 'editor', 'destroyer')->latest()->first();
+//
+//            $eid = $request->eid;
+//            $event = Event::firstOrNew(['eid'=>$eid]);
+//           $event->e_title = $request->e_title;
+//            $event->tid = $request->tid;
+//            $event->save();
+//
+//
+//
+//       return redirect()->route('events.create')->with('success', 'Event is successfully added!');
 
-            $eid = $request->eid;
-            $event = Event::firstOrNew(['eid'=>$eid]);
-           $event->e_title = $request->e_title;
-            $event->e_date = $request->e_date;
-            $event->tid = $request->tid;
-            $event->e_loc = $request->e_loc;
-            $event->e_desc = $request->e_desc;
-            $event->e_rmrks = $request->e_rmrks;
-            $event->save();
+        $validator = Validator::make($request->all(),[
+            'e_title' => 'required',
+        ]);
+//        if (!$validator->passes()) {
+//            return response()->json(['error'=>$validator->errors()->all()]);
+//        }
+//        $input = $request->all();
+//        Event::create($input);
+//        return response()->json(['success'=>'Form Submitted successfully.']);
 
-          
-            
-       return redirect()->route('events.create')->with('success', 'Event is successfully added!');
+        if ($validator->failed()){
+            Alert::error('Error!', $validator->messages()->first());
+            return redirect()->route('batches.create');
+        }
+        else {
+            Event::create($request->all());
+            Alert::success('Success', 'Program Created Successfully');
+            return redirect()->route('batches.create');
+        }
     }
 
-    
+
+
     public function show(Event $event)
-    {        
+    {
         return view('events.show', compact('event'));
     }
 
-   
+
     public function edit(Event $event)
     {
         //
-        return view('events.edit', compact('event'));  
+        return view('events.edit', compact('event'));
     }
 
 
@@ -77,7 +94,7 @@ class EventController extends Controller
         return redirect()->route('events.index', $event)->with('update', 'Data is successfully updated!');
     }
 
-    
+
     public function destroy(Event $event)
     {
         //

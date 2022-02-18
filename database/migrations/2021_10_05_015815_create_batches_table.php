@@ -17,9 +17,14 @@ class CreateBatchesTable extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->increments('bid');
-            $table->string('b_title');
-            $table->date('strt_time')->nullable();
-            $table->date('end_time')->nullable();
+            $table->string('title', 100);
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->integer('allDay');
+            $table->string('color');
+            $table->string('textColor');
+            $table->string('location');
+            $table->text('description')->nullable();
             $table->unsignedInteger('eid')->index('fk_Event_Batches_idx');
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

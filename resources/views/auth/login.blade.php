@@ -27,7 +27,7 @@
 
   <body class="login d-flex flex-column h-100" data-new-gr-c-s-check-loaded="14.1034.0" data-gr-ext-installed="">
 
-    
+
   <!-- MAIN CONTENT BEGINS -->
   <main role="main" class="flex-shrink-0">
     <div class="container-fluid">
@@ -61,18 +61,18 @@
                     </div>
                     <div class="form-group mb-3">
                       <input name="password" id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror rounded-pill border-0 shadow-custom px-4 text-primary"   autocomplete="current-password">
-                               
+
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                     </div>
-                
+
                     <div class="custom-control custom-checkbox mb-3">
                       <input type="checkbox"  class="custom-control-input form-check-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                       <label for="remember" class="custom-control-label">Remember me</label>
-{{-- 
+{{--
                       @if (Route::has('password.request'))
                       <a class="btn btn-link" href="{{ route('password.request') }}">
                       <span class="pull-right">{{ __('Forgot Password?') }}</span>
@@ -80,14 +80,14 @@
                       @endif --}}
                     </div>
                     <button name="submit" type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign in</button>
-                    <div class="text-center d-flex justify-content-between mt-4">
-                      <p>Don't have an account?
-                         @if (Route::has('register'))
-                        <a href="{{ route('register') }}">{{ __('Register here') }}</a>
-                        @endif
-                      </p>
-                      <!-- error message -->
-                    </div>
+{{--                    <div class="text-center d-flex justify-content-between mt-4">--}}
+{{--                      <p>Don't have an account?--}}
+{{--                         @if (Route::has('register'))--}}
+{{--                        <a href="{{ route('register') }}">{{ __('Register here') }}</a>--}}
+{{--                        @endif--}}
+{{--                      </p>--}}
+{{--                      <!-- error message -->--}}
+{{--                    </div>--}}
                   </form>
                 </div>
               </div>

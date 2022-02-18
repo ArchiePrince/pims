@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -20,8 +21,9 @@ class UserController extends Controller
         //
                 //SELECT * FROM user;
                 $users = User::all();
+                $departments = Department::with('user')->get();
 
-                return view('users.index', compact('users'));
+                return view('users.index', compact('users', 'departments'));
     }
 
     /**
@@ -32,7 +34,8 @@ class UserController extends Controller
     public function create()
     {
         //
-        return view('users.create');
+        $departments = Department::with('user')->get();
+        return view('users.create', compact('departments'));
     }
 
     /**
@@ -43,14 +46,36 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $uid = $request->uid;
-        $user = User::firstOrNew(['uid'=>$uid]);
-           $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->u_dpt = $request->u_dpt;
-            $user->save();
+//        $batches = Batche::with('events')->get();
+//        $validator = Validator::make($request->all(), [
+//            'eid' => 'required',
+//            'b_title' => 'required',
+//            'start' => 'required',
+//            'end' => 'required',
+//            'location' => 'required',
+//            'allDay' => 'required',
+//            'color' => 'required',
+//            'textColor' => 'required',
+//            'description' => 'required',
+//        ]);
+//
+//        if ($validator->failed()){
+//            Alert::error('Error!', $validator->messages()->first());
+//            return redirect()->route('events.create');
+//        } else {
+//            Batche::create($request->all());
+//            Alert::success('Success', 'Event Created Successfully');
+//            return redirect()->route('events.create');
+//        }
+        User::create($request->all());
+//        $uid = $request->uid;
+//        $user = User::firstOrNew(['uid'=>$uid]);
+//           $user->name = $request->name;
+//            $user->username = $request->username;
+//            $user->email = $request->email;
+//            $user->password = Hash::make($request->password);
+//            $user->department()->did = $request->did;
+//            $user->save();
        return redirect()->route('users.create')->with('success', 'User is successfully added!');
     }
 
@@ -87,7 +112,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
+
     }
 
     /**

@@ -18,12 +18,13 @@ class CreateParticipantsTable extends Migration
             $table->string('rec_id')->nullable();
             $table->string('f_name');
             $table->string('l_name');
-            $table->enum('gender', ['male', 'female']);
-            $table->string('p_email');
-            $table->string('prfssn');
+            $table->enum('gender', ['Male', 'Female']);
+            $table->string('p_email')->unique();
+            $table->string('profession');
             $table->string('org');
-            $table->string('distr');
-            $table->string('rgn');
+            $table->string('workloc');
+            $table->string('district');
+            $table->string('region');
             $table->string('tel');
             $table->string('phone')->nullable();
             $table->unsignedInteger('created_by')->nullable();

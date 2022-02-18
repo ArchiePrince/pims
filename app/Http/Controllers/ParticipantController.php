@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ParticipantsImport;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Participant;
@@ -9,20 +10,21 @@ use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Batche;
 use App\Models\Event;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ParticipantController extends Controller
 {
-
     public function index()
     {
         //
-        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
+        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->latest()->get();
         $participants = Participant::with('creator', 'editor', 'destroyer')->get();
 
         return view('participants.index', compact('participants', 'attBatchEvent'));
     }
 
- 
+
     public function create()
     {
         //
@@ -36,10 +38,11 @@ class ParticipantController extends Controller
         $l_name         = $request->l_name;
         $gender        = $request->gender;
         $p_email         = $request->p_email;
-        $prfssn         = $request->prfssn;
+        $profession         = $request->profession;
         $org         = $request->org;
-        $distr         = $request->distr;
-        $rgn         = $request->rgn;
+        $workloc    = $request->workloc;
+        $district         = $request->district;
+        $region         = $request->region;
         $tel         = $request->tel;
         $phone         = $request->phone;
 
@@ -51,27 +54,29 @@ class ParticipantController extends Controller
             $participant->l_name          = $l_name;
             $participant->gender          = $gender;
             $participant->p_email         = $p_email;
-            $participant->prfssn           = $prfssn;
+            $participant->profession           = $profession;
             $participant->org       = $org;
-            $participant->distr         = $distr;
-            $participant->rgn          = $rgn;
+        $participant->workloc       = $workloc;
+
+        $participant->district         = $district;
+            $participant->region          = $region;
             $participant->tel = $tel;
             $participant->phone  = $phone;
             $participant->save();
-            
+
        return redirect()->route('participants.create')->with('success', 'Participant is successfully added!');
     }
 
       public function show($id)
     {
         //
-        
+
     }
-    
+
     public function edit(Participant $participant)
     {
         //
-       return view('participants.edit', compact('participant'));    
+       return view('participants.edit', compact('participant'));
     }
 
 
@@ -102,7 +107,26 @@ class ParticipantController extends Controller
     {
         //
         $participant->delete();
-        return redirect()->back()->with('del', 'Data deleted successfully!');
+        Alert::success('Success', 'Participants Deleted Successfully');
+        return redirect()->back();
+
+    }
+    public function import(Request $request)
+    {
+//        $request->validate([
+//           'file' => 'required'
+//        ]);
+
+        $file = $request->file('file')->store('public/import');
+        $import = new ParticipantsImport;
+        $import->import($file);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        Alert::success('Success', 'Participants Created Successfully');
+        return back();
 
     }
 }

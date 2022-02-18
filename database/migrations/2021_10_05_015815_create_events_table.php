@@ -15,11 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('eid');
-            $table->string('e_title')->unique('e_title_UNIQUE');
-            $table->date('e_date')->useCurrent();
-            $table->string('e_loc');
-            $table->text('e_desc')->nullable();
-            $table->text('e_rmrks')->nullable();
+            $table->string('e_title');
             $table->unsignedInteger('tid')->index('fk_Event_Type_idx');
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

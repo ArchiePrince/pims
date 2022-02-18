@@ -165,7 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -229,6 +230,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Excel' => \Maatwebsite\Excel\Facades\Excel::class,
+
+
 
     ],
 

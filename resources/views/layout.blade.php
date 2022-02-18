@@ -13,13 +13,14 @@
     <title>{{ config('app.name', 'PIMS') }}</title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">--}}
+      <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!-- iCheck -->
     <link href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
-	
+
     <!-- bootstrap-progressbar -->
     <link href="{{ asset('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
     <!-- JQVMap -->
@@ -48,7 +49,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                <img src="{{ asset('images/user.png') }}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -66,11 +67,18 @@
                 <ul class="nav side-menu">
                   <li><a href="{{ url('dashboard') }}"><i class="fa fa-dashboard"></i> {{ __('Dashboard') }}</a>
                   </li>
-                  <li><a><i class="fa fa-calendar-o"></i> Events <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-calendar-o"></i> Programs <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('events.index') }}">{{ __('View All Events') }}</a></li>
-                      <li><a href="{{ route('events.create') }}">{{ __('Add Event') }}</a></li>
+                      <li><a href="{{ route('events.index') }}">{{ __('View All Programs') }}</a></li>
+                      <li><a href="{{ route('batches.create') }}">{{ __('Add Event') }}</a></li>
                     </ul>
+                      <ul class="nav child_menu">
+                          <li class="sub_menu"><a href="{{ route('users.index') }}">{{ __('All Users') }}</a>
+                          </li>
+                          <li><a href="{{ route('users.create') }}">{{ __('Add User') }}</a>
+                          </li>
+
+                      </ul>
                   </li>
                   <li><a><i class="fa fa-male"></i> {{ __('Participants') }} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -78,19 +86,35 @@
                       <li><a href="{{ route('participants.create') }}">{{ __('Add Participant') }}</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{ url('nametags') }}"><i class="fa fa-credit-card"></i> {{ __('Name Tags') }}</a>
-                  </li>
-                  <li><a><i class="fa fa-book"></i> {{ __('Attendance') }} <span class="fa fa-chevron-down"></span></a>
+
+                  <li><a><i class="fa fa-sitemap"></i> {{ __('Departments') }} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('attendance.index') }}">{{ __('Participants by Events') }}</a></li>
-                      <li><a href="{{ route('attendance.create') }}">{{ __('Register Participants') }}</a></li>
+                      <li><a href="{{ route('departments.index') }}">{{ __('All Departments') }}</a></li>
+                      <li><a href="{{ route('departments.create') }}">{{ __('Add Department') }}</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-users"></i> {{ __('Users') }} <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{ route('users.index') }}">{{ __('View All Users') }}</a></li>
-                      <li><a href="{{ route('users.create') }}">{{ __('Add User') }}</a></li>
-                    </ul>
+                    <li><a><i class="fa fa-book"></i> {{ __('Reports') }} <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('attendance.index') }}"><i class="fa fa-bookmark"></i>{{ __('Register') }}</a></li>
+                            <li><a href="{{ url('nametags') }}"><i class="fa fa-credit-card"></i>{{ __('Name Tags') }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-cogs"></i> {{ __('System Configuration') }} <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+
+                            <li><a><i class="fa fa-users"></i>{{ __('Users') }}<span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li class="sub_menu"><a href="{{ route('users.index') }}">{{ __('All Users') }}</a>
+                                    </li>
+                                    <li><a href="{{ route('users.create') }}">{{ __('Add User') }}</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li><a href="#level1_2">Level One</a>
+                            </li>
+                        </ul>
                   {{-- </li>
                       <li><a href="{{ url('paswords.reset') }}"><i class="fa fa-key"></i> {{ __('Change Password') }}</a>
                   </li> --}}
@@ -136,14 +160,14 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" v-pre>
-                    <img src="{{ asset('images/img.jpg') }}" alt=""> {{ Auth::user()->name }}
+                    <img src="{{ asset('images/user.png') }}" alt=""> {{ Auth::user()->name }}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="javascript:;"> Profile</a>
                     <a class="dropdown-item"  href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    
+
                       <i class="fa fa-sign-out pull-right"></i> Log Out
                     </a>
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -219,7 +243,8 @@
    @yield('dTscripts')
    @yield('formJs')
     <!-- Custom Theme Scripts -->
-    <script src="{{ asset('build/js/custom.min.js') }}"></script>
-	
+{{--    <script src="{{ asset('build/js/custom.min.js') }}"></script>--}}
+    <script src="{{ asset('build/js/custom.js') }}"></script>
+
   </body>
 </html>

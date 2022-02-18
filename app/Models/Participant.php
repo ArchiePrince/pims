@@ -14,7 +14,7 @@ class Participant extends Model
     use HasFactory;
     use Userstamps;
     use SoftDeletes;
-    
+
 
     protected $table = 'participants';
     protected $primaryKey = 'pid';
@@ -29,10 +29,11 @@ class Participant extends Model
         'l_name',
         'gender',
         'p_email',
-        'prfssn',
+        'profession',
         'org',
-        'distr',
-        'rgn',
+        'workloc',
+        'district',
+        'region',
         'tel',
         'phone',
     ];
@@ -44,9 +45,11 @@ class Participant extends Model
     }
 
     //Participants can belongToMany Batches
-    public function batches() 
+    public function batches()
     {
-        return $this->belongsToMany(Batche::class, 'batche_participant', 'bid', 'pid');
+        return $this->belongsToMany(Batche::class, 'batche_participant', 'bid', 'pid')
+            ->withTimestamps()
+            ->withPivot(['status', 'remarks']);
     }
 
 }

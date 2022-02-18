@@ -16,21 +16,34 @@ class Batche extends Model
     protected $table = 'batches';
     protected $primaryKey = 'bid';
 
-    protected $fillable = [
-        'b_title',
-        'strt_time',
-        'end_time',
-        'eid',
+    protected $dates = [
+        'start',
+        'end',
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $fillable = [
+        'title',
+        'start',
+        'end',
+        'location',
+        'allDay',
+        'color',
+        'textColor',
+        'description',
+        'eid',
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
 
 
     //A batch belongs to an event
     public function events()
     {
-        return $this->belongsTo(Event::class, 'eid');
+        return $this->belongsTo(Event::class, 'bid', 'eid');
     }
 
     //A batch belongsToMany Participants

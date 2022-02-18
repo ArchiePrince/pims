@@ -16,10 +16,10 @@ class AttendanceController extends Controller
     public function index()
     {
 
-        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
-        $participants = Participant::with('creator', 'editor', 'destroyer')->get();
+        $batches = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
+        $participants = Participant::with('batches','creator', 'editor', 'destroyer')->get();
 
-        return view('attendance.index', compact('participants', 'attBatchEvent'));
+        return view('attendance.index', compact('participants', 'batches'));
     }
 
     /**
@@ -29,9 +29,9 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        $attBatchEvent = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
+        $batches = Batche::with('events', 'participants', 'creator', 'editor', 'destroyer')->get();
         $participants = Participant::with('creator', 'editor', 'destroyer')->get();
-       return view('attendance.create', compact('participants', 'attBatchEvent'));
+       return view('attendance.create', compact('participants', 'batches'));
     }
 
     /**

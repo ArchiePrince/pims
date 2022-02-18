@@ -43,34 +43,72 @@
         <div class="form-group row">
             <div class="x_content">
 									<br />
-
-
                     @if(\Session::has('del'))
                         <div id="hide-message" class="alert alert-primary alert-dismissible fade show" style="width: 70%; opacity: 1;">
                             <i class="fa fa-check-circle-o" style="font-size:1em"></i>
                             {!! \Session::get('del') !!}
                         </div>
                     @endif
-
-
-
-
-
+                @if(session('status'))
+                    <div id="hide-message" class="alert alert-primary alert-dismissible fade show" role="alert" style="width: 70%; opacity: 1;">
+                        {{ session('status') }}
+                    </div>
+                @endif
             </div>
+        </div>
 
-										</div>
+          @if(isset($errors) && $errors->any())
+              <div id="hide-message" class="alert alert-primary alert-dismissible fade show">
+                 @foreach($errors->all() as $error)
+                     {{ $error }}
+                 @endforeach
+              </div>
+          @endif
 
+          @if(session()->has('failures'))
+
+              <table id="hide-table" class="table table-danger">
+                  <tr>
+                      <th>Row</th>
+                      <th>Attribute</th>
+                      <th>Errors</th>
+                      <th>Value</th>
+                  </tr>
+
+                  @foreach(session()->get('failures') as $validation)
+                      <tr>
+                          <td>{{ $validation->row() }}</td>
+                          <td>{{ $validation->attribute() }}</td>
+                          <td>
+                              <ul>
+                                  @foreach($validation->errors() as $e)
+                                      <li>{{ $e }}</li>
+                                  @endforeach
+                              </ul>
+                          </td>
+                          <td>
+                              {{ $validation->values()[$validation->attribute()] }}
+                          </td>
+                      </tr>
+                  @endforeach
+              </table>
+          @endif
 
       </div>
 
       <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="float-left">
+              <form action="{{ route('participants.import') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <div class="form-group mt-3">
+                      <input type="file" name="file">
+                      <button type="submit" class="btn btn-outline-danger">Import</button>
+                  </div>
+              </form>
+          </div>
+        <div class="col-md-5 col-sm-5 col-xs-9 form-group pull-right top_search">
           <div class="float-right">
-            <a href="{{ route('participants.create') }}" class="" ><i class="fa fa-plus btn btn-icon btn-danger"></i></a>
-
-
-
-
+            <a id="demo-form" href="{{ route('participants.create') }}" class=" btn btn-icon btn-danger mt-1" ><i class="fa fa-plus"></i> Add Participant</a>
           </div>
         </div>
       </div>
@@ -101,45 +139,20 @@
               <div class="row">
                   <div class="col-sm-12">
                     <div class="card-box table-responsive">
-
-                        <br />
-	{{-- <form id="submitSelectedParticipants" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ route('attendance.store') }}">
-											  @csrf
-
-											<div class="col-md-8 col-sm-8 ">
-                                                 <div class="input-group">
-                                                <label class="control-label col-md-3 col-sm-3 ">Assign Participant to Event:</label>
-
-
-												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
-													<option selected>Select Event:Batch</option>
-                                                    @foreach ($attBatchEvent as $batchEvent )
-                                                    @php
-                                                        $full_name = $batchEvent->events->e_title. ":".$batchEvent->b_title;
-                                                    @endphp
-                                                    <option value="{{ $batchEvent->bid }}">{{ $full_name ?? 'Not found'}}</option>
-                                                    @endforeach
-
-												</select>
-
-                                                <input type="submit" placeholder="Register Participant" class="input-group-btn btn btn-danger save_btn">
-                                            </div>
-											</div>
-                            </form>
-	 --}}
-
-            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" cellspacing="0" style="width:100%">
+            <table id="datatable" class="table table-striped table-bordered text-nowrap" style="width:100%">
               <thead>
                 <tr>
-                    <th>
-                    <input type="checkbox" class="checkBoxClassAll" value="">
-                    </th>
+{{--                    <th>--}}
+{{--                    <input type="checkbox" class="checkBoxClassAll" value="">--}}
+{{--                    </th>--}}
                   <th>#</th>
                   <th>Name</th>
-                  <th>Gender</th>
                   <th>Email </th>
+                    <th>Gender</th>
                   <th>Profession </th>
+
                   <th>Organization </th>
+                    <th>Work Location</th>
                   <th>District </th>
                   <th>Region</th>
                   <th>Telephone</th>
@@ -152,18 +165,21 @@
                 @if($participants)
                 @foreach($participants as $participant)
                 <tr id="pid{{ $participant->pid }}">
-                <td><input type="checkbox" class="checkBoxClass" name="pid[]" value="{{ $participant->pid }}"></td>
-                  <td class="rec_id">{{ $participant->rec_id }}</td>
+{{--                <td><input type="checkbox" class="checkBoxClass" name="pid[]" value="{{ $participant->pid }}"></td>--}}
+                  <td class="rec_id">{{ $participant->pid }}</td>
                   @php
                   $full_name = $participant->f_name. " ".$participant->l_name;
                 @endphp
                 <td class="full_name">{{ $full_name }}</td>
-                <td class="gender"> {{ $participant->gender }}</td>
                 <td class="p_email">{{ $participant->p_email }}</td>
-                <td class="prfssn">{{ $participant->prfssn }}</td>
-                <td class="org">{{ $participant->org }}</td>
-                <td  class="distr">{{ $participant->distr }}</td>
-                <td class="rgn"> {{ $participant->rgn }}</td>
+                    <td class="gender"> {{ $participant->gender }}</td>
+                <td class="profession">{{ $participant->profession }}</td>
+
+
+                    <td class="org">{{ $participant->org }}</td>
+                    <td class="workloc">{{ $participant->workloc }}</td>
+                <td  class="district">{{ $participant->district }}</td>
+                <td class="region"> {{ $participant->region }}</td>
                 <td  class="tel"> {{ $participant->tel }} </td>
                 <td class="phone"> {{ $participant->phone ?? "Null" }}</td>
                 <td>
@@ -174,7 +190,7 @@
                    <form action="{{ route('participants.destroy', $participant) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"><i ></i></a></button>
+                    <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"><i ></i></button>
                    </form>
                   </td>
                 </tr>
@@ -231,7 +247,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Profession</label>
                             <div class="col-sm-9">
-                                <input type="text" id="m_prfssn"name="prfssn" class="form-control" value="" readonly/>
+                                <input type="text" id="m_prfssn"name="profession" class="form-control" value="" readonly/>
                             </div>
                         </div>
 
@@ -243,18 +259,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Work Location</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="m_workloc"name="workloc" class="form-control" value="" readonly/>
+                            </div>
+                        </div>
+
 
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">District</label>
                             <div class="col-sm-9">
-                                <input type="text" id="m_distr"name="distr" class="form-control" value="" readonly/>
+                                <input type="text" id="m_distr"name="district" class="form-control" value="" readonly/>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Region</label>
                             <div class="col-sm-9">
-                                <input type="text" id="m_rgn"name="rgn" class="form-control" value="" readonly/>
+                                <input type="text" id="m_rgn"name="region" class="form-control" value="" readonly/>
                             </div>
                         </div>
 
@@ -274,7 +297,6 @@
                     </div>
 
                 <!-- form add end -->
-            </div>
                   <div class="clearfix"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icofont icofont-eye-alt"></i>Close</button>
@@ -316,27 +338,15 @@
     },2000);
 
 </script>
-{{-- <script>
-$(document).ready(function() {
-    $('#datatable-checkbox').DataTable( {
-        "columnDefs": [
+        <script>
+
+            $('#hide-table').show();
+            setTimeout(function()
             {
-                "targets": [ 3 ],
-                "visible": false
-            },
-            {
-                "targets": [ 8 ],
-                "visible": false
-            },
-            {
-                "targets": [ 10 ],
-                "visible": false
-            }
-        ]
-    } );
-} )
-</script> --}}
-{{-- view js --}}
+                $('#hide-table').hide();
+            },20000);
+
+        </script>
 <script>
     $(document).on('click','.paxView',function()
     {
@@ -346,14 +356,21 @@ $(document).ready(function() {
         $('#m_name').val(_this.find('.full_name').text());
         $('#m_gender').val(_this.find('.gender').text());
         $('#m_email').val(_this.find('.p_email').text());
-        $('#m_prfssn').val(_this.find('.prfssn').text());
+        $('#m_prfssn').val(_this.find('.profession').text());
         $('#m_org').val(_this.find('.org').text());
-        $('#m_distr').val(_this.find('.distr').text());
-        $('#m_rgn').val(_this.find('.rgn').text());
+        $('#m_workloc').val(_this.find('.workloc').text());
+        $('#m_distr').val(_this.find('.district').text());
+        $('#m_rgn').val(_this.find('.region').text());
         $('#m_tel').val(_this.find('.tel').text());
         $('#m_phone').val(_this.find('.phone').text());
     });
 </script>
+        <script>
+            $(document).on('ready', '.errorView', function ()
+            {
+                $('#error-table').modal('show');
+            });
+        </script>
 
 {{-- <script>
     $(function(e){
@@ -507,5 +524,5 @@ $(function(f){
 </script> --}}
 
       @endsection
-
+@include('sweetalert::alert')
 @endsection

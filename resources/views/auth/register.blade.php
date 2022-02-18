@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+]<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-100">
   <head>
              <!-- CSRF Token -->
@@ -98,6 +98,17 @@
 {{--                                    </span>--}}
 {{--                                @enderror--}}
 {{--                </div>--}}
+{{--                      <div class="item form-group">--}}
+{{--                          <label class="col-form-label col-md-3 col-sm-3 label-align" >Department</label>--}}
+{{--                          <div class="col-md-6 col-sm-6  ">--}}
+{{--                              <select name="did"class="select2_single form-control" tabindex="-1">--}}
+{{--                                  <option selected>Select Department</option>--}}
+{{--                                  @foreach ($departments ?? '' as $department)--}}
+{{--                                      <option value="{{ $department->did }}">{{ $department->d_title }}</option>--}}
+{{--                                  @endforeach--}}
+{{--                              </select>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
 
 
                     <div class="form-group mb-3">

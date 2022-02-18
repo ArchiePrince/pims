@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-class User extends Authenticatable
+class  User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,11 +19,12 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'did',
         'name',
         'email',
         'username',
         'password',
-        'u_dpt',
+        'is_admin',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -54,8 +55,10 @@ class User extends Authenticatable
 
         public function event()
     {
-
             return $this->hasMany(Event::class);
+    }
 
+    public function department() {
+            return $this->belongsTo(Department::class, 'did');
     }
 }

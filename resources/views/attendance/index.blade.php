@@ -2,7 +2,7 @@
 @extends('layout')
 @section('dTstyles')
 <!-- Datatables -->
-    
+
 <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
 <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
 <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -67,7 +67,7 @@
               <div class="row">
                   <div class="col-sm-12">
                     <div class="card-box table-responsive">
-              
+
         @if(\Session::has('del'))
             <div id="hide-message" class="alert alert-success alert-dismissible fade show" style="width: 25%; opacity:0.6;">
                 <i class="fa fa-check-circle-o" style="font-size:1em"></i>
@@ -79,23 +79,27 @@
                     <label class="control-label col-md-6 col-sm-6">Search by Events</label>
 												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
 												<option selected>Select Event:Batch</option>
-                                                    @foreach ($attBatchEvent as $batchEvent )
+                                                    @foreach ($batches as $batch )
                                                     @php
-                                                        $full_name = $batchEvent->events->e_title. ":".$batchEvent->b_title;
+                                                        $full_name = $batch->events->e_title. ":".$batch->b_title;
                                                     @endphp
-                                                    <option value="{{ $batchEvent->bid }}">{{ $full_name ?? 'Not found'}}</option>
+                                                    <option value="{{ $batch->bid }}">{{ $full_name ?? 'Not found'}}</option>
                                                     @endforeach
 												</select>
                         <br>
                         <br>
               <thead>
                 <tr>
+                    <th>
+                        <input type="checkbox" class="checkBoxClassAll" value="">
+                    </th>
                   <th>#</th>
                   <th>Participant Name</th>
                   <th>Email</th>
                   <th>Organization</th>
                   <th>Phone Number </th>
                   <th>District</th>
+                    <th>Work Location</th>
                   <th>Event Name ( Batches )</th>
                   <th>Date </th>
                   <th>Actions</th>
@@ -104,24 +108,30 @@
               </thead>
               <tbody>
                 {{-- @foreach($event as $even) --}}
-                  @foreach ($attBatchEvent as $pax)
-                    
-                 
+                  @foreach ($participants as $participant)
+                      @php
+                          $full_name = $participant->f_name. " ".$participant->l_name;
+                      @endphp
                   <tr>
-                <td class="rec_id">{{ $loop->iteration }}</td>
-                <td>{{ $pax->pivot->f_name ?? "None Record" }} </td>
-                <td >{{ $pax->pivot->p_email ?? "None Record" }}</td>
-                <td class="full_name">{{ $pax->pivot->org ?? "None Record" }}</td>
-                <td class="gender">{{ $pax->pivot->phone ?? "None Record" }}</td>
-                <td>{{ $pax->pivot->distr ?? "None Record" }}</td>
+                      <th>
+                          <input type="checkbox" class="checkBoxClassAll" value="">
+                      </th>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $participant->full_name }} </td>
+                <td >{{ $participant->p_email }}</td>
+                <td class="full_name">{{ $participant->org }}</td>
+                <td class="gender">{{ $participant->phone }}</td>
+                <td>{{ $participant->district }}</td>
+                      <td>{{$participant->workloc}}</td>
                   <td class="p_email">
-                    @foreach ($participants as $bat)
-                      
-                    
-                    <ul>
-                      <li> ( {{ $bat->pivot->b_title ?? 'None' }} )</li>
-                      </ul>
-                      @endforeach
+
+{{--                    @foreach ($participant->batches as $batch)--}}
+
+
+{{--                    <ul>--}}
+{{--                      <li> {{ $batch->events->e_title }}( {{ $batch->b_title }} )</li>--}}
+{{--                      </ul>--}}
+{{--                      @endforeach--}}
                     </td>
                 <td>{{ $pax->pivot->created_at ?? "None Record" }}</td>
                 <td>
@@ -138,7 +148,7 @@
                 </tr>
                 @endforeach
                 {{-- @endforeach --}}
-                 
+
               </tbody>
             </table>
           </div>
@@ -172,7 +182,7 @@
     {
         $('#hide-message').hide();
     },2000);
-    
+
 </script>
 {{-- <script>
 $(document).ready(function() {
@@ -211,8 +221,8 @@ $(document).ready(function() {
         $('#m_tel').val(_this.find('.tel').text());
         $('#m_phone').val(_this.find('.phone').text());
     });
-</script> 
+</script>
 
       @endsection
-  
+
 @endsection

@@ -35,9 +35,6 @@
           <div class="float-right">
             <a href="{{ route('events.create') }}" class=""><button type="button" class="btn btn-danger btn-rounded btn-icon">{{ __('Create a new Event') }}
                 </button> </a>
-          {{-- <a href="{{ route('events') }}"><button type="button" class="btn btn-danger btn-rounded btn-icon">
-            {{-- {{ __('Register Event') }} --}}
-          </button></a>
           </div>
         </div>
       </div>
@@ -48,7 +45,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Distinct Events</h2>
+            <h2>Distinct Programs</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -81,12 +78,9 @@
                     <input type="checkbox" name="" id="check-all" disabled>
                   </th>
                   <th>#</th>
-                  <th>Title</th>
+                  <th>Program Title</th>
                   <th>Type</th>
-                  <th>Date</th>
-                  <th>Location </th>
-                  <th>Description </th>
-                  <th>Remarks </th>
+                    <th>Batches Assigned</th>
                   <th>Created By </th>
                   <th>Updated By </th>
                   <th>Actions</th>
@@ -101,12 +95,26 @@
                 <td class="rec_id">{{ $loop->iteration }}</td>
                 <td>{{ $event->e_title }}</td>
                 <td >{{ $event->eventType->t_title }}</td>
-                <td class="full_name">{{ $event->e_date }}</td>
-                <td class="gender">{{ $event->e_loc }}</td>
-                <td class="p_email">{{ $event->e_desc }}</td>
-                <td class="prfssn">{{ $event->e_rmrks }}</td>
-                <td class="org">{{$event->creator->name ?? 'Not found'}}</td>
-                <td class="org">{{$event->editor->name ?? 'Not found'}}</td>
+
+{{--                        <td>--}}
+{{--                            @foreach($event->batches as $batch)--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    {{ $batch->b_title }}--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                            @endforeach--}}
+
+{{--                        </td>--}}
+                    <td>
+                        @foreach ($event->batches as $batch)
+                            <ul>
+                                <li>( {{ $batch->b_title }} )</li>
+                            </ul>
+                        @endforeach
+                    </td>
+                <td class="org">{{$event->creator->name}}</td>
+                <td class="org">{{$event->editor->name}}</td>
                 <td>
                    <a class=" m-r-15 text-muted paxView" data-toggle="modal" data-id="'.$event->eid.'" data-target="#EventView">
                       <i class="fa fa-eye" style="color: #0ecf48;"></i>
@@ -115,7 +123,7 @@
                    <form action="{{ route('events.destroy', $event) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"><i ></i></a></button>
+                    <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"></button>
                    </form>
                   </td>
                 </tr>

@@ -18,7 +18,6 @@ class Event extends Model
     protected $primaryKey = 'eid';
 
     protected $dates = [
-        'e_date',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -26,10 +25,6 @@ class Event extends Model
 
     protected $fillable = [
         'e_title',
-        'e_date',
-        'e_loc',
-        'e_desc',
-        'e_rmrks',
         'tid',
         'created_at',
         'updated_at',
@@ -46,15 +41,13 @@ class Event extends Model
 
     public function eventType()
     {
-
             return $this->belongsTo(EventType::class, 'tid');
-        
     }
-  
+
     //Event has many batches
     public function batches()
     {
-        return $this->hasMany(Batche::class, 'bid');
+        return $this->hasMany(Batche::class, 'eid', 'bid');
     }
 
 }

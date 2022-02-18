@@ -2,7 +2,7 @@
 
 @section('dTstyles')
 <!-- Datatables -->
-    
+
 <link href="{{ asset('vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
@@ -39,8 +39,8 @@
 
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-          <div class="float-right">
-            <a href="{{ url('users/create') }}" class=""><i class="fa fa-plus btn btn-icon btn-danger"></i></a>
+          <div class="float-right"> <a href="{{ route('users.create') }}" class=""><button type="button" class="btn btn-danger btn-rounded btn-icon">{{ __('Create a new User') }}
+                </button> </a>
           </div>
         </div>
       </div>
@@ -79,9 +79,9 @@
                   <th>Full name</th>
                   <th>Username</th>
                   <th>Email </th>
-                  <th>Department </th>
-                  <th>Created at</th>
-                  <th>Updated at</th>
+                  <th>Department</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
                   <th>Actions</th>
 
                 </tr>
@@ -95,15 +95,16 @@
                 <td class="full_name">{{ $user->name }}</td>
                 <td class="username"> {{ $user->username }}</td>
                 <td class="email">{{ $user->email }}</td>
-                <td class="u_dpt">{{ $user->u_dpt }}</td>
+                         <td class="u_dpt">{{ $user->department->d_title }}</td>
                 <td class="created_at">{{ $user->created_at }}</td>
+
                 <td  class="updated_at">{{ $user->updated_at }}</td>
                 <td>
                    <a class=" m-r-15 text-muted userView" data-toggle="modal" data-id="'.$user->uid.'" data-target="#UserView">
                       <i class="fa fa-eye" style="color: #0ecf48;"></i>
                     </a>
                     <a href="{{ url('users/'.$user->uid) }}"><i class="fa fa-edit text-primary"></i></a>
-                   
+
                     <a href="{{ url('users/'.$user->uid.'/delete') }}" onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash" style="color: red;"></i></a>
                   </td>
                 </tr>
@@ -129,7 +130,7 @@
                 <form id="demo-form"><!-- form add -->
                     {{ csrf_field() }}
                     <input type="hidden" class="form-control" id="m_uid" name="uid" value=""/>
-                    
+
                     <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Full Name</label>
@@ -142,12 +143,12 @@
                         <div class="col-sm-9">
                             <input type="text" id="m_username"name="username" class="form-control" value="" readonly/>
                         </div>
-                    </div>    
+                    </div>
 
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Email Address</label>
                             <div class="col-sm-9">
-                                <input type="text" id="m_email"name="email" class="form-control" value="" readonly/> 
+                                <input type="text" id="m_email"name="email" class="form-control" value="" readonly/>
                                 {{-- <span id="m_email" name="p_email" class="form-control" aria-readonly>{{ $participant->p_email }}</span> --}}
                             </div>
                         </div>
@@ -158,7 +159,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Created At</label>
                             <div class="col-sm-9">
@@ -166,7 +167,7 @@
                             </div>
                         </div>
 
-                                          
+
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Updated At</label>
                             <div class="col-sm-9">
@@ -211,7 +212,7 @@
     {
         $('#hide-message').hide();
     },5000);
-    
+
 </script>
 {{-- <script>
 $(document).ready(function() {
@@ -247,8 +248,8 @@ $(document).ready(function() {
         $('#m_updated_at').val(_this.find('.updated_at').text());
 
     });
-</script> 
+</script>
 
-      @endsection
-  
+@endsection
+
 @endsection

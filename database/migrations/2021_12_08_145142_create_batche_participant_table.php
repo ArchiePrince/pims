@@ -16,6 +16,10 @@ class CreateBatcheParticipantTable extends Migration
         Schema::create('batche_participant', function (Blueprint $table) {
             $table->unsignedInteger('bid');
             $table->unsignedInteger('pid');
+            $table->boolean('status')->default(true);
+            $table->text('remarks')->nullable();
+            $table->timestamps();
+
             $table->foreign('bid')->references('bid')->on('batches')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->foreign('pid')->references('pid')->on('participants')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });

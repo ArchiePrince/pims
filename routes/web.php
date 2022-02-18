@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\BatcheController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,19 +25,24 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('dashboard', function () {
+    return view('/dashboard');
+})->middleware('auth');
 
-Route::view('dashboard', 'dashboard');
+
+//Route::view('dashboard', 'dashboard');
 
 
 Route::get('nametags', function () {
     return view('/nametags');
-    
-});
+})->middleware('auth');
 
-Route::resource('batches', BatcheController::class);
+Route::resource('batches', BatcheController::class)->middleware('auth');
+
+Route::resource('departments', DepartmentController::class)->middleware('auth');
 
 Route::resource('participants', ParticipantController::class)->middleware('auth');
-
+Route::post('participants', [ParticipantController::class, 'import'])->name('participants.import')->middleware('auth');
 
 Route::resource('attendance', AttendanceController::class)->middleware('auth');
 

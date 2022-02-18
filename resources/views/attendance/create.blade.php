@@ -112,12 +112,12 @@
 
 												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
 													<option selected>Select Event:Batch</option>
-                                                    @foreach ($attBatchEvent as $batchEvent )
+                                                    @foreach ($batches as $batch )
 
                                                     @php
-                                                        $full_name = $batchEvent->events->e_title . ":".$batchEvent->b_title;
+                                                        $full_name = $batch->events->e_title . ":".$batch->b_title;
                                                     @endphp
-                                                    <option value="{{ $batchEvent->bid }}">{{ $full_name ?? 'Not found'}}</option>
+                                                    <option value="{{ $batch->bid }}">{{ $full_name ?? 'Not found'}}</option>
                                                     @endforeach
 
 												</select>
@@ -159,12 +159,12 @@
                 <td class="full_name">{{ $full_name }}</td>
                 <td class="gender"> {{ $participant->gender }}</td>
                 <td class="p_email">{{ $participant->p_email }}</td>
-                <td class="prfssn">{{ $participant->prfssn }}</td>
+                <td class="prfssn">{{ $participant->profession }}</td>
                 <td class="org">{{ $participant->org }}</td>
-                <td  class="distr">{{ $participant->distr }}</td>
-                <td class="rgn"> {{ $participant->rgn }}</td>
+                <td  class="distr">{{ $participant->district }}</td>
+                <td class="rgn"> {{ $participant->region }}</td>
                 <td  class="tel"> {{ $participant->tel }} </td>
-                <td class="phone"> {{ $participant->phone ?? "Null" }}</td>
+                <td class="phone"> {{ $participant->phone }}</td>
                 <td>
                    <a class=" m-r-15 text-muted paxView" data-toggle="modal" data-id="'.$participant->pid.'" data-target="#ParticipantView">
                       <i class="fa fa-eye" style="color: #0ecf48;"></i>
