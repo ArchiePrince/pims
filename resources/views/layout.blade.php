@@ -9,6 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+      <link rel="manifest" href="{{ asset('images/site.webmanifest') }}">
 
     <title>{{ config('app.name', 'PIMS') }}</title>
 
@@ -40,8 +44,8 @@
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            <div class="navbar" style="border: 0;">
+              <a href="{{ url('dashboard') }}" class=""><img class="center-block" src="{{ asset('images/eugap3.png') }}" width="58.5%" ></a>
             </div>
 
             <div class="clearfix"></div>
@@ -83,16 +87,11 @@
                   <li><a><i class="fa fa-male"></i> {{ __('Participants') }} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('participants.index') }}">{{ __('View All Participants') }}</a></li>
-                      <li><a href="{{ route('participants.create') }}">{{ __('Add Participant') }}</a></li>
+{{--                      <li><a href="{{ route('participants.create') }}">{{ __('Add Participant') }}</a></li>--}}
                     </ul>
                   </li>
 
-                  <li><a><i class="fa fa-sitemap"></i> {{ __('Departments') }} <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{ route('departments.index') }}">{{ __('All Departments') }}</a></li>
-                      <li><a href="{{ route('departments.create') }}">{{ __('Add Department') }}</a></li>
-                    </ul>
-                  </li>
+
                     <li><a><i class="fa fa-book"></i> {{ __('Reports') }} <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ route('attendance.index') }}"><i class="fa fa-bookmark"></i>{{ __('Register') }}</a></li>
@@ -109,15 +108,14 @@
                                     </li>
                                     <li><a href="{{ route('users.create') }}">{{ __('Add User') }}</a>
                                     </li>
-
                                 </ul>
                             </li>
-                            <li><a href="#level1_2">Level One</a>
+                            <li><a><i class="fa fa-sitemap"></i> {{ __('Departments') }} <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ route('departments.index') }}">{{ __('All Departments') }}</a></li>
+                                </ul>
                             </li>
                         </ul>
-                  {{-- </li>
-                      <li><a href="{{ url('paswords.reset') }}"><i class="fa fa-key"></i> {{ __('Change Password') }}</a>
-                  </li> --}}
                 </ul>
               </div>
                 </ul>
@@ -163,12 +161,14 @@
                     <img src="{{ asset('images/user.png') }}" alt=""> {{ Auth::user()->name }}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                    <a class="dropdown-item"  href="javascript:;"> Profile  <i class="fa fa-bars pull-right" style="color: red"></i></a>
+                      <a class="dropdown-item" href="{{ url('paswords.reset') }}"> Change Password <i class="fa fa-key pull-right" style="color: red"></i></a>
+                      <div class="dropdown-divider"></div>
                     <a class="dropdown-item"  href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
 
-                      <i class="fa fa-sign-out pull-right"></i> Log Out
+                      <i class="fa fa-sign-out pull-right" style="color: red"></i> Log Out
                     </a>
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

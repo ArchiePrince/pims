@@ -25,7 +25,7 @@
 @section('content')
     <div class="page-title">
         <div class="title_left">
-            <h3>Users <small>Some examples to get you started</small></h3>
+            <h3>Departments</h3>
         </div>
 
         @if(\Session::has('del'))
@@ -37,7 +37,7 @@
 
         <div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="float-right"> <a href="{{ route('departments.create') }}" class=""><button type="button" class="btn btn-danger btn-rounded btn-icon">{{ __('Create a new Department') }}
+                <div class="float-right"> <a class=""><button type="button" class="btn btn-danger btn-rounded btn-icon" data-toggle="modal" data-target="#DepartmentsSubmit"> <i class="fa fa-plus"></i> {{ __('Create a new Department') }}
                         </button> </a>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                             <table id="datatable" class="table table-striped table-bordered bulk_action" cellspacing="0" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th><input type="checkbox" name="" id=""></th>
+
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>Staff</th>
@@ -82,33 +82,39 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if($departments)
-                                    @foreach($departments as $department)
+
+                                    @forelse ($departments as $department)
                                         <tr>
-                                            <td><input type="checkbox" name="" id=""></td>
-                                            <td class="uid">{{ $department->did }}</td>
+                                            <td class="uid">{{ $loop->iteration }}</td>
                                             <td class="full_name">{{ $department->d_title }}</td>
                                             <td class="p_email">
-                                                @foreach ($department->user as $staff)
-                                                    <ul>
-                                                        <li> {{ $staff->name }}</li>
+                                                <ul>
+                                                    <li>
+                                                        {{ $department->user->name ?? ""}}
+                                                    </li>
                                                     </ul>
-                                                @endforeach
                                             </td>
                                             <td class="username"> </td>
                                             <td class="created_at">{{ $department->created_at }}</td>
                                             <td  class="updated_at">{{ $department->updated_at }}</td>
                                             <td>
-                                                <a class=" m-r-15 text-muted departmentView" data-toggle="modal" data-id="'.$department->did.'" data-target="#DepartmentView">
-                                                    <i class="fa fa-eye" style="color: #0ecf48;"></i>
-                                                </a>
+{{--                                                <a class=" m-r-15 text-muted departmentView" data-toggle="modal" data-id="'.$department->did.'" data-target="#DepartmentView">--}}
+{{--                                                    <i class="fa fa-eye" style="color: #0ecf48;"></i>--}}
+{{--                                                </a>--}}
                                                 <a href="{{ url('departments/'.$department->did) }}"><i class="fa fa-edit text-primary"></i></a>
 
-                                                <a href="{{ url('departments/'.$department->did.'/delete') }}" onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash" style="color: red;"></i></a>
+                                                <form action="{{ route('departments.destroy', $department) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"><i ></i></button>
+                                                </form>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                @endif
+                                    @empty
+                                        <p>
+                                            No staff
+                                        </p>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -131,31 +137,12 @@
 
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Full Name</label>
+                                            <label class="col-sm-3 col-form-label">Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" id="m_name"name="name" class="form-control" value="" readonly/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Username</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" id="m_username"name="username" class="form-control" value="" readonly/>
+                                                <input type="text" id="m_name"name="d_title" class="form-control" value="" readonly/>
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Email Address</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" id="m_email"name="email" class="form-control" value="" readonly/>
-                                                {{-- <span id="m_email" name="p_email" class="form-control" aria-readonly>{{ $participant->p_email }}</span> --}}
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Department</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" id="m_u_dpt"name="u_dpt" class="form-control" value="" readonly/>
-                                            </div>
-                                        </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Created At</label>
                                             <div class="col-sm-9">
@@ -182,6 +169,46 @@
                     </div>
                 </div>
                 <!-- End Modal View-->
+
+                <!-- Department Modal Submit-->
+                <div class="modal fade" id="DepartmentsSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel2" style="text-align: center;">Add Department</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ route('departments.store') }}">
+                                    @csrf
+                                    <div class="item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="d_title"> Title <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-9 col-sm-6 ">
+                                            <input type="text" id="d_title" required class="form-control " name="d_title">
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-6 offset-md-1">
+                                                <button type="submit" class="btn btn-success btn-round"><i class="fa fa-save"></i> Submit</button>
+                                                <a><button class="btn btn-round btn-danger" data-dismiss="modal"type="button"><i class="fa fa-close"></i> Cancel</button></a>
+                                                <!-- form add end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Modal Submit-->
+
+                <!--Scripts-->
                 @section('dTscripts')
                     <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
                     <script src="{{ asset('vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
@@ -245,5 +272,5 @@
                     </script>
 
 @endsection
-
+@include('sweetalert::alert');
 @endsection

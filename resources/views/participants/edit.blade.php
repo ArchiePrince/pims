@@ -12,7 +12,7 @@
 @endsection
 @section('content')
 <div class="">
-  
+
   <div class="clearfix"></div>
   <div class="page-title">
   <div class="title_left">
@@ -21,7 +21,7 @@
 
 						<div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-              
+
                 {{-- <div class="float-right">
                 <a href="{{ route('participants.index') }}"><button type="button" class="btn btn-danger btn-rounded btn-icon">
                   {{ __('View All Participants') }}
@@ -67,7 +67,7 @@
 										<span class="text-success label-align">
 											{{ session('success') }}
 										</span>
-										
+
 									@endif --}}
 									<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left"  action="{{ route('participants.update', $participant) }}" method="POST">
 											  @csrf
@@ -92,7 +92,7 @@
                                           <label class="col-form-label col-md-3 col-sm-3 label-align" >Gender</label>
                             <div class="col-md-6 col-sm-6  ">
                                             <select id="gender" name="gender" class="select2_single form-control" tabindex="-1">
-                                            <option value="" disabled>Select Gender</option>										
+                                            <option value="" disabled>Select Gender</option>
 											<option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                             </select>
@@ -107,14 +107,14 @@
 										</div>
 
                     <div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="prfssn">Profession <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="profession">Profession <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="profession" name="prfssn" required="required" class="form-control" value="{{ $participant->prfssn }}">
+												<input type="text" id="profession" name="profession" required="required" class="form-control" value="{{ $participant->profession }}">
 											</div>
 										</div>
 
-                    
+
                     <div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="org">Organization <span class="required">*</span>
 											</label>
@@ -123,12 +123,20 @@
 											</div>
 										</div>
 
-                    
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="org">Work Location <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <input type="text" id="organization" name="workloc" required="required" class="form-control" value="{{ $participant->workloc }}">
+                                            </div>
+                                        </div>
+
+
                     <div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="prfssn">District <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="district">District <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="district" name="distr" required="required" class="form-control" value="{{ $participant->distr }}">
+												<input type="text" id="district" name="district" required="required" class="form-control" value="{{ $participant->district }}">
 											</div>
 										</div>
 
@@ -136,12 +144,12 @@
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="rgn">Region <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="region" name="rgn" required="required" class="form-control" value="{{ $participant->rgn }}">
+												<input type="text" id="region" name="region" required="required" class="form-control" value="{{ $participant->region }}">
 											</div>
 										</div>
 
 
-                    
+
                     <div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="tel">Telephone <span class="required">*</span>
 											</label>
@@ -196,7 +204,7 @@
         {
             $('#hide-message').hide();
         },5000);
-        
+
     </script>
-    
+
 @endsection

@@ -25,7 +25,7 @@
 
 @endsection
 @section('content')
-    <div class="page-title">
+<div class="page-title">
       <div class="title_left">
         <h3>Users <small>Some examples to get you started</small></h3>
       </div>
@@ -43,8 +43,7 @@
                 </button> </a>
           </div>
         </div>
-      </div>
-    </div>
+      </div></div>
 
     <div class="clearfix"></div>
 
@@ -95,7 +94,7 @@
                 <td class="full_name">{{ $user->name }}</td>
                 <td class="username"> {{ $user->username }}</td>
                 <td class="email">{{ $user->email }}</td>
-                         <td class="u_dpt">{{ $user->department->d_title }}</td>
+                         <td class="u_dpt">{{ $user->department->d_title ?? ""}}</td>
                 <td class="created_at">{{ $user->created_at }}</td>
 
                 <td  class="updated_at">{{ $user->updated_at }}</td>
@@ -185,6 +184,7 @@
         </div>
     </div>
 </div>
+    @endsection
 <!-- End Modal View-->
       @section('dTscripts')
       <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -252,4 +252,4 @@ $(document).ready(function() {
 
 @endsection
 
-@endsection
+

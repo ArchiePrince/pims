@@ -18,10 +18,11 @@ class EventController extends Controller
         //SELECT * FROM events;
         $events = Event::with('batches', 'eventType', 'creator', 'editor', 'destroyer')
             ->latest()->get();
+        $eventTypes = EventType::all();
         $batches = Batche::with('events', 'creator', 'editor', 'destroyer')->get();
 
 
-        return view('events.index', compact('events', 'batches'));
+        return view('events.index', compact('events', 'batches', 'eventTypes'));
 
     }
 
@@ -47,6 +48,7 @@ class EventController extends Controller
 
         $validator = Validator::make($request->all(),[
             'e_title' => 'required',
+            'tid' => 'required',
         ]);
 //        if (!$validator->passes()) {
 //            return response()->json(['error'=>$validator->errors()->all()]);
@@ -57,12 +59,12 @@ class EventController extends Controller
 
         if ($validator->failed()){
             Alert::error('Error!', $validator->messages()->first());
-            return redirect()->route('batches.create');
+            return redirect()->back();
         }
         else {
             Event::create($request->all());
             Alert::success('Success', 'Program Created Successfully');
-            return redirect()->route('batches.create');
+            return redirect()->back();
         }
     }
 

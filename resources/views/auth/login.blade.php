@@ -80,14 +80,14 @@
                       @endif --}}
                     </div>
                     <button name="submit" type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign in</button>
-{{--                    <div class="text-center d-flex justify-content-between mt-4">--}}
-{{--                      <p>Don't have an account?--}}
-{{--                         @if (Route::has('register'))--}}
-{{--                        <a href="{{ route('register') }}">{{ __('Register here') }}</a>--}}
-{{--                        @endif--}}
-{{--                      </p>--}}
-{{--                      <!-- error message -->--}}
-{{--                    </div>--}}
+                    <div class="text-center d-flex justify-content-between mt-4">
+                      <p>Don't have an account?
+                         @if (Route::has('register'))
+                        <a href="{{ route('register') }}">{{ __('Register here') }}</a>
+                        @endif
+                      </p>
+                      <!-- error message -->
+                    </div>
                   </form>
                 </div>
               </div>

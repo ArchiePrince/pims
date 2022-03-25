@@ -37,12 +37,15 @@ Route::get('nametags', function () {
     return view('/nametags');
 })->middleware('auth');
 
+
 Route::resource('batches', BatcheController::class)->middleware('auth');
 
 Route::resource('departments', DepartmentController::class)->middleware('auth');
 
 Route::resource('participants', ParticipantController::class)->middleware('auth');
-Route::post('participants', [ParticipantController::class, 'import'])->name('participants.import')->middleware('auth');
+//Route::post('participants', [ParticipantController::class, 'import'])->name('participants.import')->middleware('auth');
+Route::get('/download-form', [ParticipantController::class, 'download'])->name('participants.download')->middleware('auth');
+
 
 Route::resource('attendance', AttendanceController::class)->middleware('auth');
 

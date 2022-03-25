@@ -93,8 +93,8 @@
 
 
                             <option selected value="">Select Program</option>
-                            @foreach($batches as $batch)
-                                <option value="{{ $batch->events->eid }}">{{ $batch->events->e_title }}</option>
+                            @foreach($events as $event)
+                                <option value="{{ $event->eid }}">{{ $event->e_title }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -105,11 +105,11 @@
                 </div>
                 <div class="form-group">
                     <label>Start Date</label>
-                    <input type="text" class="form-control" id="start" name="start" placeholder="Start date & time">
+                    <input type="text" class="form-control start-date" id="start" name="start" placeholder="Start date & time">
                 </div>
                 <div class="form-group">
                     <label>End Date</label>
-                    <input type="text" class="form-control" id="end" name="end" placeholder="End date & time">
+                    <input type="text" class="form-control end-date" id="end" name="end" placeholder="End date & time">
                 </div>
                 <div class="form-group">
                     <label>Location</label>
@@ -164,12 +164,12 @@
 
 
                                 <option selected value="">Select Program Type</option>
-{{--                                @foreach($events->eventType as $type)--}}
-{{--                                    <option value="{{ $type->tid }} ">{{ $type->t_title }}</option>--}}
-{{--                                @endforeach--}}
-                                @foreach($batches as $batch)
-                                    <option value="{{ $batch->events->eventType->tid }}">{{ $batch->events->eventType->t_title }}</option>
+                                @foreach($eventType as $type)
+                                    <option value="{{ $type->tid }} ">{{ $type->t_title }}</option>
                                 @endforeach
+{{--                                @foreach ($events as $event)--}}
+{{--                                    <option value="{{ $event->eventType->tid }}">{{ $event->eventType->t_title }}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                         </div>
                     </div>

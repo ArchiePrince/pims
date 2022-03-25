@@ -11,14 +11,14 @@ class EventType extends Model
 
     protected $primaryKey = 'tid';
     protected $table = 'event_types';
-    
-    protected $fillable = ['t_title'];
+
+    protected $fillable = ['t_title', 'eid'];
 
 
     public function event()
     {
 
-        return $this->hasOne(Event::class);
+        return $this->belongsTo(Event::class, 'eid', 'tid');
     }
-    
+
 }

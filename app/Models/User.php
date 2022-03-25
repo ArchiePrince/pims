@@ -59,6 +59,6 @@ class  User extends Authenticatable
     }
 
     public function department() {
-            return $this->belongsTo(Department::class, 'did');
+            return $this->hasOne(Department::class, 'uid', 'did');
     }
 }

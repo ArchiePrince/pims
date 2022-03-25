@@ -15,6 +15,7 @@ class CreateEventTypesTable extends Migration
     {
         Schema::create('event_types', function (Blueprint $table) {
             $table->increments('tid');
+            $table->unsignedInteger('eid')->index();
             $table->string('t_title');
             $table->timestamps();
         });

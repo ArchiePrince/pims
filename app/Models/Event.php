@@ -25,7 +25,9 @@ class Event extends Model
 
     protected $fillable = [
         'e_title',
-        'tid',
+        'created_by',
+        'updated_by',
+        'deleted_by',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -41,7 +43,7 @@ class Event extends Model
 
     public function eventType()
     {
-            return $this->belongsTo(EventType::class, 'tid');
+            return $this->hasOne(EventType::class, 'eid', 'tid');
     }
 
     //Event has many batches

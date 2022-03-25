@@ -92,12 +92,23 @@
                                                                       <div class="col-md-6 col-sm-6  ">
                                                                           <select name="did"class="select2_single form-control" tabindex="-1">
                                                                               <option selected>Select Department</option>
-                                                                              @foreach ($departments ?? '' as $department)
+                                                                              @foreach ($departments as $department)
                                                                                   <option value="{{ $department->did }}">{{ $department->d_title }}</option>
                                                                               @endforeach
                                                                           </select>
                                                                       </div>
                                                                   </div>
+
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align" >Role</label>
+                                            <div class="col-md-6 col-sm-6  ">
+                                                <select name="is_admin"class="select2_single form-control" tabindex="-1">
+                                                    <option selected>Select Role</option>
+                                                        <option value="1">Admin</option>
+                                                        <option value="0">User</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                                                                     <div class="item form-group">
                                                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="u_dpt">Set Default Password <span class="required">*</span>

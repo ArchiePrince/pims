@@ -33,7 +33,7 @@
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
           <div class="float-right">
-            <a href="{{ route('events.create') }}" class=""><button type="button" class="btn btn-danger btn-rounded btn-icon">{{ __('Create a new Event') }}
+            <a href="{{ route('batches.create') }}" class=""><button type="button" class="btn btn-danger btn-rounded btn-icon">{{ __('Create a new Event') }}
                 </button> </a>
           </div>
         </div>
@@ -74,13 +74,12 @@
             <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action" cellspacing="0" style="width:100%">
               <thead>
                 <tr>
-                  <th>
-                    <input type="checkbox" name="" id="check-all" disabled>
-                  </th>
                   <th>#</th>
-                  <th>Program Title</th>
-                  <th>Type</th>
-                    <th>Batches Assigned</th>
+                    <th>Events</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Program Title</th>
+                    <th>Type</th>
                   <th>Created By </th>
                   <th>Updated By </th>
                   <th>Actions</th>
@@ -88,13 +87,13 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($events as $event)
+                @foreach($batches as $batch)
                 <tr>
-
-                <td><input type="checkbox" id="check-all" ></td>
                 <td class="rec_id">{{ $loop->iteration }}</td>
-                <td>{{ $event->e_title }}</td>
-                <td >{{ $event->eventType->t_title }}</td>
+                    <td>
+                        {{$batch->title}}
+                    </td>
+
 
 {{--                        <td>--}}
 {{--                            @foreach($event->batches as $batch)--}}
@@ -106,21 +105,27 @@
 {{--                            @endforeach--}}
 
 {{--                        </td>--}}
+                    <td>{{ $batch->start }}</td>
+                    <td>{{ $batch->end }}</td>
+
                     <td>
-                        @foreach ($event->batches as $batch)
-                            <ul>
-                                <li>( {{ $batch->b_title }} )</li>
-                            </ul>
-                        @endforeach
+                        <ul>
+                            <li>
+                                {{ $batch->events->e_title ?? "Nil" }}
+                            </li>
+
                     </td>
-                <td class="org">{{$event->creator->name}}</td>
-                <td class="org">{{$event->editor->name}}</td>
+                    <td>
+                        {{ $batch->events->eventType->t_title ?? "Nil" }}
+                    </td>
+                <td class="org">{{ $batch->events->creator->name ?? "Nil"}}</td>
+                <td class="org">{{ $batch->events->editor->name ?? "Nil"}}</td>
                 <td>
-                   <a class=" m-r-15 text-muted paxView" data-toggle="modal" data-id="'.$event->eid.'" data-target="#EventView">
+                   <a class=" m-r-15 text-muted paxView" data-toggle="modal" data-id="'.$batch->eid.'" data-target="#EventView">
                       <i class="fa fa-eye" style="color: #0ecf48;"></i>
                     </a>
                     <a href=""><i class="fa fa-edit text-primary"></i></a>
-                   <form action="{{ route('events.destroy', $event) }}" method="POST">
+                   <form action="{{ route('batches.destroy', $batch) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button  type="submit" onclick="return confirm('Are you sure to want to delete it?')" class="fa fa-trash" style="color: red; border: none;"></button>

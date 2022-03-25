@@ -20,10 +20,10 @@ class UserController extends Controller
     {
         //
                 //SELECT * FROM user;
-                $users = User::all();
-                $departments = Department::with('user')->get();
-
-                return view('users.index', compact('users', 'departments'));
+                $users = User::with('department')->get();
+//                $departments = Department::with('user')->get();
+//                dd($users);
+                return view('users.index', compact('users'));
     }
 
     /**
@@ -67,15 +67,29 @@ class UserController extends Controller
 //            Alert::success('Success', 'Event Created Successfully');
 //            return redirect()->route('events.create');
 //        }
-        User::create($request->all());
-//        $uid = $request->uid;
-//        $user = User::firstOrNew(['uid'=>$uid]);
-//           $user->name = $request->name;
-//            $user->username = $request->username;
-//            $user->email = $request->email;
-//            $user->password = Hash::make($request->password);
-//            $user->department()->did = $request->did;
+//        User::create($request->all());
+        $uid = $request->uid;
+        $department = Department::all();
+        $user = User::firstOrNew(['uid'=>$uid]);
+           $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            $department->did = $request->did;
+        $user->department()->save($department);
+
+//        $user = new User;
+//        $user->name = "Mustapha Yakubu";
+//        $user->username = "MY";
+//        $user->email = "mustapha.yakubu@giz.de";
+//        $user->password = Hash::make($request->password);
 //            $user->save();
+//
+//            $department = new Department;
+//            $department->d_title = 'IT';
+//            $user->department()->save($department);
        return redirect()->route('users.create')->with('success', 'User is successfully added!');
     }
 

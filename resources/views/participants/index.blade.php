@@ -98,19 +98,31 @@
 
       <div class="title_right">
           <div class="float-left">
-              <form action="{{ route('participants.import') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('participants.store') }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="form-group mt-3">
                       <input type="file" name="file">
-                      <button type="submit" class="btn btn-outline-danger">Import</button>
+                      <button type="submit" name="file" class="btn btn-outline-danger">Import</button>
                   </div>
               </form>
           </div>
         <div class="col-md-5 col-sm-5 col-xs-9 form-group pull-right top_search">
           <div class="float-right">
-            <a id="demo-form" href="{{ route('participants.create') }}" class=" btn btn-icon btn-danger mt-1" ><i class="fa fa-plus"></i> Add Participant</a>
+{{--              <button class="btn btn-danger m-r-15" ><i class="fa fa-plus"></i> Add Participant</button>--}}
+              <div class="btn-group">
+                  <button type="button" class="btn btn-danger dropdown-toggle m-r-15" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus"></i> Add Participant
+                  </button>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item" data-toggle="modal" data-target="#ParticipantSubmit"> <i style="color: red" class="fa fa-file"></i> Modal Form </a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{{ route('participants.download') }}"><i style="color: red" class="fa fa-download"></i>  Download Form</a>
+                  </div>
+              </div>
           </div>
+
         </div>
+
       </div>
     </div>
 
@@ -203,7 +215,7 @@
       </div>
 
 
-      <!-- Modal View-->
+{{--      <!-- Participant Modal View-->--}}
 <div class="modal fade" id="ParticipantView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -299,13 +311,138 @@
                 <!-- form add end -->
                   <div class="clearfix"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icofont icofont-eye-alt"></i>Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                 </div>
                 </form>
         </div>
     </div>
 </div>
-<!-- End Modal View-->
+</div>
+{{--<!-- End Modal View-->--}}
+
+
+    <!-- Participant Modal Submit-->
+    <div class="modal fade" id="ParticipantSubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2" style="text-align: center;">Add Participant</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="{{ route('participants.store') }}">
+                        @csrf
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">First Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="first-name" required="required" class="form-control " name="f_name">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Last Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="last-name" name="l_name" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" >Gender</label>
+                            <div class="col-md-9 col-sm-6  ">
+                                <select id="gender" name="gender"class="select2_single form-control" tabindex="-1">
+                                    <option value="" disabled>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="p_email">Email <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="email" id="email" name="p_email" required="required" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="prfssn">Profession <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="profession" name="profession" required="required" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="org">Organization <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="organization" name="org" required="required" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="org">Work Location <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="workloc" name="workloc" required="required" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="prfssn">District <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="district" name="district" required="required" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="rgn">Region <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="text" id="region" name="region" required="required" class="form-control">
+                            </div>
+                        </div>
+
+
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="tel">Telephone <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="tel" id="telephone" name="tel" required="required" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="tel">Mobile Number
+                            </label>
+                            <div class="col-md-9 col-sm-6 ">
+                                <input type="tel" id="phone" name="phone" class="form-control">
+                            </div>
+                        </div>
+                        <!-- form add end -->
+                        <div class="clearfix"></div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6 offset-md-1">
+                                    <button type="submit" name="modal" class="btn btn-success btn-round"><i class="fa fa-save"></i> Submit</button>
+                                    <a href="{{ route('participants.index') }}"><button class="btn btn-round btn-danger" data-dismiss="modal"type="button"><i class="fa fa-close"></i> Cancel</button></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- End Modal Submit-->
+
 
     @yield('register')
 
@@ -365,12 +502,6 @@
         $('#m_phone').val(_this.find('.phone').text());
     });
 </script>
-        <script>
-            $(document).on('ready', '.errorView', function ()
-            {
-                $('#error-table').modal('show');
-            });
-        </script>
 
 {{-- <script>
     $(function(e){

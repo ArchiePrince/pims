@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://pims.net'),
+    'url' => env('APP_URL', 'http://pims-reach.net'),
 
     'asset_url' => env('ASSET_URL', null),
 

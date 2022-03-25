@@ -79,12 +79,14 @@
                     <label class="control-label col-md-6 col-sm-6">Search by Events</label>
 												<select class="select2_single form-control" tabindex="-1" name="bid" class="getBid">
 												<option selected>Select Event:Batch</option>
-                                                    @foreach ($batches as $batch )
+                                                    @forelse($batches as $batch )
                                                     @php
-                                                        $full_name = $batch->events->e_title. ":".$batch->b_title;
+                                                        $full_name = $batch->events->e_title ?? " Null ". ":".$batch->b_title ?? " Null ";
                                                     @endphp
-                                                    <option value="{{ $batch->bid }}">{{ $full_name ?? 'Not found'}}</option>
-                                                    @endforeach
+                                                    <option value="{{ $batch->bid }}">{{ $full_name }}</option>
+                                                    @empty
+                                                        <option value="">No Record Found</option>
+                                                    @endforelse
 												</select>
                         <br>
                         <br>
@@ -101,7 +103,7 @@
                   <th>District</th>
                     <th>Work Location</th>
                   <th>Event Name ( Batches )</th>
-                  <th>Date </th>
+                  <th>Status </th>
                   <th>Actions</th>
 
                 </tr>

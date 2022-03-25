@@ -6,22 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 class AddForeignKeysToEventsTable extends Migration
 {
-  
+
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->foreign(['tid'], 'fk_type_event')->references(['tid'])->on('event_types')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('created_by')->references('uid')->on('users');
             $table->foreign('updated_by')->references('uid')->on('users');
             $table->foreign('deleted_by')->references('uid')->on('users');
+
         });
     }
 
-   
+
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropForeign('fk_type_event');
             $table->dropForeign(['created_by']);
             $table->dropForeign(['updated_by']);
             $table->dropForeign(['deleted_by']);
